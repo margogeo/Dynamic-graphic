@@ -1,0 +1,57 @@
+<html>
+<body bgColor=#404040>
+<center>
+<div id='imgbox' style='height:750px; width:1000px; border:2px solid gray' >
+<canvas id='canvas' width='1000px' height='750px'>
+</canvas>
+</div>
+</center>
+
+<script type="text/javascript">  
+var n=5, w=1000, h=750;
+var cx=w/2, cy=h/2;
+
+var i,r=[45,11,18,19,5],
+      d=[0,120,200,320,40],
+      a=[0,1,2,3,4],
+      sp=[0,0.01,0.007,0.0035,0.04],
+      clm=['yellow','gray','brown','blue','white'];
+
+function Draw()
+{
+ var c=document.getElementById("canvas");
+ var prevX,prevY,ctx=c.getContext("2d");
+ ctx.beginPath();
+ ctx.clearRect(0,0,w,h);
+
+ for(i=0; i < n ; i++) 
+ {
+  var ox=cx, oy=cy;
+  if(i==4) {
+    ox=prevX;
+    oy=prevY; 
+  }
+  a[i] += sp[i];
+  var x = ox + d[i]*Math.cos(a[i]);
+  var y = oy + d[i]*Math.sin(a[i]);
+
+  ctx.beginPath();
+  ctx.arc(ox,oy,d[i],0,2*Math.PI);
+  ctx.stroke();  
+  ctx.beginPath();
+  ctx.arc(x, y,r[i],0,2*Math.PI);
+  ctx.fillStyle = clm[i];
+  ctx.fill();
+  ctx.stroke();
+  prevX=x;
+  prevY=y;
+ }
+  
+ setTimeout(Draw, 20);
+}
+ 
+ Draw();
+
+</SCRIPT>
+</body>
+</html>
